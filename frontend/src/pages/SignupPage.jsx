@@ -5,8 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { signup, googleLogin } from "@/services/authService";
-import { Loader2 } from "lucide-react";
+import { Loader2, Eye, EyeOff } from "lucide-react";
 import { GoogleLogin } from "@react-oauth/google";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { Logo } from "@/components/Logo";
 
 export default function SignupPage() {
     const [formData, setFormData] = useState({
@@ -14,6 +16,7 @@ export default function SignupPage() {
         password: "",
         full_name: "",
     });
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -28,7 +31,7 @@ export default function SignupPage() {
         setLoading(true);
         try {
             await signup(formData);
-            navigate("/");
+            navigate("/dashboard");
         } catch (err) {
             setError(err.response?.data?.detail || "Failed to create account. Please try again.");
         } finally {
@@ -41,7 +44,7 @@ export default function SignupPage() {
         setError("");
         try {
             await googleLogin(credentialResponse.credential);
-            navigate("/");
+            navigate("/dashboard");
         } catch (err) {
             setError(err.response?.data?.detail || "Google login failed.");
         } finally {
@@ -54,9 +57,19 @@ export default function SignupPage() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-slate-50 dark:bg-slate-950 p-4">
+        <div className="flex items-center justify-center min-h-screen bg-slate-50 dark:bg-slate-950 p-4 transition-colors duration-300">
+            <div className="absolute top-4 right-4 flex items-center gap-2">
+                <ThemeToggle />
+            </div>
+
             <Card className="w-full max-w-md shadow-lg border-slate-200 dark:border-slate-800">
                 <CardHeader className="space-y-1">
+                    <div className="flex justify-center mb-4">
+                        <Link to="/" className="flex items-center gap-2">
+                            <Logo className="h-10 w-auto text-primary" />
+                            <span className="text-2xl font-bold tracking-tight">Veridoc</span>
+                        </Link>
+                    </div>
                     <CardTitle className="text-2xl font-bold tracking-tight text-center">Create an account</CardTitle>
                     <CardDescription className="text-center">
                         Enter your details below to create your account
@@ -93,18 +106,31 @@ export default function SignupPage() {
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="password">Password</Label>
-                            <Input
-                                id="password"
-                                type="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required
-                                className="bg-white dark:bg-slate-900"
-                            />
+                            <div className="relative">
+                                <Input
+                                    id="password"
+                                    type={showPassword ? "text" : "password"}
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    required
+                                    className="bg-white dark:bg-slate-900 pr-10"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                                >
+                                    {showPassword ? (
+                                        <EyeOff className="h-4 w-4" />
+                                    ) : (
+                                        <Eye className="h-4 w-4" />
+                                    )}
+                                </button>
+                            </div>
                         </div>
                     </CardContent>
                     <CardFooter className="flex flex-col space-y-4 pt-6">
-                        <Button className="w-full" type="submit" disabled={loading}>
+                        <Button className="w-full h-11 font-semibold" type="submit" disabled={loading}>
                             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                             Create account
                         </Button>
