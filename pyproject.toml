@@ -6,7 +6,7 @@ readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.12"
 authors = [
-    { name = "" },
+    { name = "Vishalkumarjaiswal16" },
 ]
 keywords = [
     "rag",
@@ -37,43 +37,33 @@ dependencies = [
     "tiktoken>=0.8.0",
     "sentence-transformers>=3.0.0",
     "huggingface-hub>=0.25.0",
-
     # AWS Bedrock
     "boto3>=1.35.0",
-
     # Vector Databases
     "chromadb>=0.6.0",
     "faiss-cpu>=1.9.0",
-
     # PDF & Document Processing
     "pypdf>=6.6.2",
     "python-docx>=1.1.0",
-
     # Web Framework & API
     "fastapi>=0.115.0",
     "uvicorn[standard]>=0.34.0",
     "pydantic>=2.10.0",
-
     # Frontend / Prototyping
     "streamlit>=1.41.0",
-
     # Database
     "sqlalchemy>=2.0.0",
-
     # Authentication & Security
     "pyjwt>=2.10.0",
     "passlib>=1.7.4",
     "python-multipart>=0.0.18",
     "bcrypt>=4.2.0",
-
     # Retrieval & Search
     "rank-bm25>=0.2.2",
     "numpy>=2.0.0",
     "scipy>=1.14.0",
-
     # Environment & Config
     "python-dotenv>=1.0.0",
-
     # Utilities
     "requests>=2.32.0",
     "aiofiles>=24.1.0",
@@ -113,6 +103,9 @@ Issues = "https://github.com/Vishalkumarjaiswal16/Veridoc/issues"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["Veridoc"]
 
 # ── Ruff (linter + formatter) ────────────────────────────────────────
 [tool.ruff]

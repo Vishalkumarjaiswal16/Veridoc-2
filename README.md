@@ -1,4 +1,4 @@
-# Veridoc - AI-Powered Document Analysis
+            # Veridoc - AI-Powered Document Analysis
 
 ## Project Structure
 - **/backend**: FastAPI server with MongoDB integration.
@@ -9,7 +9,7 @@
 ### Backend Setup
 1. Navigate to `/backend`.
 2. Ensure you have `uv` installed.
-3. Run the server:
+3. Run the server:            
    ```bash
    uv run python main.py
    ```
